@@ -318,41 +318,41 @@ def update_table(year, end_date, start_date, punt_cats):
     Output('z_scores_container', 'children'),
     [Input('year_rank', 'value'), Input('date_picker', 'end_date'), Input('date_picker', 'start_date')]
 )
-def update_z_score_graphs(year, end_date, start_date):
-    year = int(year)
-    data_columns = [
-        'MP', 'Age', 'FG', 'FGA', 'FG%', '3P', '3PA', '3P%', 'FT', 'FTA', 'FT%', 'ORB',
-        'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'name', 'position', 'team', 'games'
-    ]
-    z_cats = ['z_PTS', 'z_FG%', 'z_3P', 'z_FT%', 'z_TRB', 'z_AST', 'z_STL', 'z_BLK']
-    z = data[data['year'] == year]
-    z = z[np.logical_and(z['Date'] >= start_date, z['Date'] <= end_date)]
-    #     games= z.groupby('name').size()
-    #     z = z[data_columns]
-    z = z.groupby('name').agg({'MP': 'mean', 'Age': 'mean', 'FG': 'mean', 'FGA': 'mean', 'FG%': 'mean', '3P': 'mean',
-                               '3PA': 'mean', '3P%': 'mean', 'FT': 'mean', 'FTA': 'mean', 'FT%': 'mean', 'ORB': 'mean',
-                               'DRB': 'mean', 'TRB': 'mean', 'AST': 'mean', 'STL': 'mean', 'BLK': 'mean', 'TOV': 'mean',
-                               'PF': 'mean', 'PTS': 'mean', 'name': 'last', 'position': 'last',
-                               'Tm': 'last', 'G': 'count'})
-    z.columns = data_columns
-    #     position = z.index.get_level_values('position')
-    #     z.index = z.index.droplevel(1)
-    #     z['games'] = games
-    z['FT%'] = z['FT'] / z['FTA']
-    z['FG%'] = z['FG'] / z['FGA']
-
-    z, _ = calculate_z_scores(z, [])
-
-    #     z.insert(loc=1,column = 'position' ,value = position)
-    z.insert(loc=1, column='name', value=z.index.get_level_values('name'))
-
-    children = []
-    for z_cat in z_cats:
-        fig = px.scatter(z.iloc[:300], x='rank', y=z_cat,
-                         hover_data={"name": True, f'{z_cat[2:]}': ':.3f'}, trendline="lowess")
-        #         fig.update_xaxes(hoverformat= '.2f')
-        children.append(html.Div(dcc.Graph(id=z_cat, figure=fig)))
-    return children
+# def update_z_score_graphs(year, end_date, start_date):
+#     year = int(year)
+#     data_columns = [
+#         'MP', 'Age', 'FG', 'FGA', 'FG%', '3P', '3PA', '3P%', 'FT', 'FTA', 'FT%', 'ORB',
+#         'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', 'name', 'position', 'team', 'games'
+#     ]
+#     z_cats = ['z_PTS', 'z_FG%', 'z_3P', 'z_FT%', 'z_TRB', 'z_AST', 'z_STL', 'z_BLK']
+#     z = data[data['year'] == year]
+#     z = z[np.logical_and(z['Date'] >= start_date, z['Date'] <= end_date)]
+#     #     games= z.groupby('name').size()
+#     #     z = z[data_columns]
+#     z = z.groupby('name').agg({'MP': 'mean', 'Age': 'mean', 'FG': 'mean', 'FGA': 'mean', 'FG%': 'mean', '3P': 'mean',
+#                                '3PA': 'mean', '3P%': 'mean', 'FT': 'mean', 'FTA': 'mean', 'FT%': 'mean', 'ORB': 'mean',
+#                                'DRB': 'mean', 'TRB': 'mean', 'AST': 'mean', 'STL': 'mean', 'BLK': 'mean', 'TOV': 'mean',
+#                                'PF': 'mean', 'PTS': 'mean', 'name': 'last', 'position': 'last',
+#                                'Tm': 'last', 'G': 'count'})
+#     z.columns = data_columns
+#     #     position = z.index.get_level_values('position')
+#     #     z.index = z.index.droplevel(1)
+#     #     z['games'] = games
+#     z['FT%'] = z['FT'] / z['FTA']
+#     z['FG%'] = z['FG'] / z['FGA']
+#
+#     z, _ = calculate_z_scores(z, [])
+#
+#     #     z.insert(loc=1,column = 'position' ,value = position)
+#     z.insert(loc=1, column='name', value=z.index.get_level_values('name'))
+#
+#     children = []
+#     for z_cat in z_cats:
+#         fig = px.scatter(z.iloc[:300], x='rank', y=z_cat,
+#                          hover_data={"name": True, f'{z_cat[2:]}': ':.3f'}, trendline="lowess")
+#         #         fig.update_xaxes(hoverformat= '.2f')
+#         children.append(html.Div(dcc.Graph(id=z_cat, figure=fig)))
+#     return children
 
 
 
