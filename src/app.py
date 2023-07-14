@@ -112,7 +112,7 @@ data = total_df[total_df['G'].notnull()]
 
 for element in data_columns[1:-1]:
     data[element] = data[element].astype('float32')
-data.dtypes
+
 # Build App
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 # df = pd.DataFrame(columns = [
