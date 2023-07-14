@@ -313,11 +313,11 @@ def update_table(year, end_date, start_date, punt_cats):
 
     ), } for i in z.keys()], z.to_json(date_format='iso', orient='split')
 
-
-@callback(
-    Output('z_scores_container', 'children'),
-    [Input('year_rank', 'value'), Input('date_picker', 'end_date'), Input('date_picker', 'start_date')]
-)
+#
+# @callback(
+#     Output('z_scores_container', 'children'),
+#     [Input('year_rank', 'value'), Input('date_picker', 'end_date'), Input('date_picker', 'start_date')]
+# )
 # def update_z_score_graphs(year, end_date, start_date):
 #     year = int(year)
 #     data_columns = [
