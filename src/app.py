@@ -154,10 +154,10 @@ kmeans = KMeans(n_clusters=7, random_state=0)
 cluster_dict = {}
 
 kmeans.fit(players_list)
-for i in range(1,len(kmeans.cluster_centers_)+1):
+for i in range(0,len(kmeans.cluster_centers_)):
     cluster_dict[f'Cluster {i}'] = []
-    for j in range(0,len(kmeans.cluster_centers_[i-1])):
-        cluster_dict[f'Cluster {i}'].append(turn_value_into_cat(kmeans.cluster_centers_[i-1][j]))
+    for j in range(0,len(kmeans.cluster_centers_[i])):
+        cluster_dict[f'Cluster {i}'].append(turn_value_into_cat(kmeans.cluster_centers_[i][j]))
 cluster_df = pd.DataFrame(cluster_dict).T
 cluster_df.columns = ['PTS', 'FG%', '3P', 'FT%', 'TRB', 'AST', 'STL', 'BLK', 'TOV']
 cluster_df.insert(0,'Cluster', cluster_df.index)
